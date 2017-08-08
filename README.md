@@ -173,9 +173,9 @@ Google Guidelines: https://support.google.com/webmasters/answer/2620865?hl=en
         $sitemapUrl = new Url($urlRoute, Url::CHANGEFREQ_WEEKLY, 1.0);
         $sitemapUrl->addAlternateLink(new AlternateLink($urlRouteDe, 'de'));
         $sitemapUrl->addAlternateLink(new AlternateLink($urlRouteFr, 'fr'));
-        $sitemapUrl->addAlternateLink(new AlternateLink($urlRoute', 'x-default')); // Country select page
+        $sitemapUrl->addAlternateLink(new AlternateLink($urlRoute, 'x-default')); // Country select page
         // Or
-        $sitemapUrl->addAlternateLink(new AlternateLink($urlRoute', 'en)); 
+        $sitemapUrl->addAlternateLink(new AlternateLink($urlRoute, 'en')); 
         
         $page->addUrl($sitemapUrl);
 
