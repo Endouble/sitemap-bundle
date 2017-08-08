@@ -38,9 +38,9 @@ class Url
     protected $priority;
 
     /**
-     * @var Alternate[]
+     * @var AlternateLink[]
      */
-    protected $alternates;
+    protected $alternateLinks;
 
     /**
      * Construct a new basic url
@@ -151,18 +151,18 @@ class Url
     }
 
     /**
-     * @param Alternate $alternate
+     * @param AlternateLink $alternateLink
      */
-    public function addAlternate(Alternate $alternate)
+    public function addAlternateLink(AlternateLink $alternateLink)
     {
-        $this->alternates[] = $alternate;
+        $this->alternateLinks[] = $alternateLink;
     }
 
     /**
-     * @return Alternate[]
+     * @return AlternateLink[]
      */
-    public function getAlternates()
+    public function getAlternateLinks()
     {
-        return $this->alternates;
+        return $this->alternateLinks;
     }
 }

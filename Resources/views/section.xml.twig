@@ -6,8 +6,8 @@
             <loc>{{ url.loc }}</loc>
             <changefreq>{{ url.changefreq }}</changefreq>
             {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
-            {% for alternate in url.alternates %}
-                <xhtml:link rel="alternate" hreflang="{{ alternate.hreflang }}" href="{{ alternate.href }}" />
+            {% for alternateLink in url.alternateLinks %}
+                <xhtml:link rel="alternate" hreflang="{{ alternateLink.hreflang }}" href="{{ alternateLink.href }}" />
             {% endfor %}
         </url>
     {% endfor %}

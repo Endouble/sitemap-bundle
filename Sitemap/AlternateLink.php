@@ -1,9 +1,11 @@
 <?php
-declare(strict_types=1);
-
 namespace Werkspot\Bundle\SitemapBundle\Sitemap;
 
-class Alternate
+/**
+ * Class for adding alternate language links to a Url
+ * Google Guidelines: https://support.google.com/webmasters/answer/2620865?hl=en
+ */
+class AlternateLink
 {
     /**
      * @var string
@@ -19,7 +21,7 @@ class Alternate
      * @param string $href
      * @param string $hreflang
      */
-    public function __construct(string $href, string $hreflang)
+    public function __construct($href, $hreflang)
     {
         $this->href = $href;
         $this->hreflang = $hreflang;
@@ -28,7 +30,7 @@ class Alternate
     /**
      * @return string
      */
-    public function getHref(): string
+    public function getHref()
     {
         return $this->href;
     }
@@ -36,7 +38,7 @@ class Alternate
     /**
      * @return string
      */
-    public function getHreflang(): string
+    public function getHreflang()
     {
         return $this->hreflang;
     }

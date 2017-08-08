@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Werkspot\Bundle\SitemapBundle\Service\Generator;
-use Werkspot\Bundle\SitemapBundle\Sitemap\Alternate;
+use Werkspot\Bundle\SitemapBundle\Sitemap\AlternateLink;
 use Werkspot\Bundle\SitemapBundle\Sitemap\SitemapIndex;
 use Werkspot\Bundle\SitemapBundle\Sitemap\SitemapSection;
 use Werkspot\Bundle\SitemapBundle\Sitemap\SitemapSectionPage;
@@ -92,15 +92,16 @@ class GenerateControllerTest extends WebTestCase
         $xml = simplexml_load_string($client->getResponse()->getContent());
 
         $this->assertEquals($mockUrlCount, count($xml->url));
+        $this->assertEquals(0, count($xml->url[0]->children('xhtml', true)));
         $this->assertGreaterThan(0, $client->getResponse()->getTtl());
         $this->assertGreaterThan(0, $client->getResponse()->getMaxAge());
     }
 
-    public function testSectionActionWithAlternates()
+    public function testSectionActionWithAlternateLinks()
     {
         $mockPage = 1;
         $mockSectionName = 'test';
-        $mockAlternateCount = 12;
+        $mockAlternateLinkCount = 12;
 
         $client = $this->getClient();
         $url = $client->getContainer()->get('router')->generate(
@@ -115,11 +116,11 @@ class GenerateControllerTest extends WebTestCase
         $mockUrl = Mockery::mock(Url::class);
         $mockUrl->shouldIgnoreMissing();
 
-        $mockAlternates = [];
-        for ($i = 1; $i <= $mockAlternateCount; $i++) {
-            $mockAlternate = Mockery::mock(Alternate::class);
-            $mockAlternate->shouldIgnoreMissing();
-            $mockAlternates[] = $mockAlternate;
+        $mockAlternateLinks = [];
+        for ($i = 1; $i <= $mockAlternateLinkCount; $i++) {
+            $mockAlternateLink = Mockery::mock(AlternateLink::class);
+            $mockAlternateLink->shouldIgnoreMissing();
+            $mockAlternateLinks[] = $mockAlternateLink;
         }
 
         $mockUrls = [$mockUrl];
@@ -127,7 +128,7 @@ class GenerateControllerTest extends WebTestCase
         $mockSectionPage = Mockery::mock(SitemapSectionPage::class);
         $mockSectionPage->shouldReceive('getUrls')->andReturn($mockUrls);
         $mockSectionPage->shouldReceive('getCount')->andReturn(1);
-        $mockUrl->shouldReceive('getAlternates')->andReturn($mockAlternates);
+        $mockUrl->shouldReceive('getAlternateLinks')->andReturn($mockAlternateLinks);
 
         $mockGenerator = Mockery::mock(Generator::class);
         $mockGenerator->shouldReceive('generateSectionPage')->andReturn($mockSectionPage);
@@ -140,7 +141,7 @@ class GenerateControllerTest extends WebTestCase
 
         $xml = simplexml_load_string($client->getResponse()->getContent());
 
-        $this->assertEquals($mockAlternateCount, count($xml->url[0]->children('xhtml', true)));
+        $this->assertEquals($mockAlternateLinkCount, count($xml->url[0]->children('xhtml', true)));
         $this->assertGreaterThan(0, $client->getResponse()->getTtl());
         $this->assertGreaterThan(0, $client->getResponse()->getMaxAge());
     }
